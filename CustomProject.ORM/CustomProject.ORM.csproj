@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.Xpo" Version="20.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomProject.Common\CustomProject.Common.csproj" />
+    <ProjectReference Include="..\CustomProject.Entity\CustomProject.Entity.csproj" />
+  </ItemGroup>
+
+</Project>
