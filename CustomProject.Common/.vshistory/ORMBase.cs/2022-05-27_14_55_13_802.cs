@@ -10,7 +10,8 @@ namespace CustomProject.Common
         where ET : class,new()
         where OT : class,new()
     {
-        private static OT _current;  //asıl değeri tutacak olan 
+        private static OT _current;  //asıl değeri tutacak olan
+
         public static OT Current  //değeri getirecek olan 
         {
             get 
@@ -22,27 +23,8 @@ namespace CustomProject.Common
                 return _current; 
             } 
         }
-  
-        private Type ETType
-        {
-            get 
-            { 
-                return typeof(ET); 
-            } 
-        }
+   
 
-        private Table TableAtt
-        {
-            get
-            {
-                var attributes = ETType.GetCustomAttributes(typeof(Table), false);
-                if (attributes !=null && attributes.Any())
-                {
-                    Table tbl = (Table)attributes[0];
-                    return tbl;
-                }
-            }
-        }
 
         public bool Delete(ET entity)
         {
@@ -51,8 +33,7 @@ namespace CustomProject.Common
 
         public bool Insert(ET entity)
         {
-            string query = "insert into ";
-
+            throw new System.NotImplementedException();
         }
 
         public List<ET> Select()
@@ -68,7 +49,11 @@ namespace CustomProject.Common
                 query += tbl.TableName;
             }
 
-            SqlDataAdapter adp = new SqlDataAdapter(query,Tools.Connection); 
+            SqlDataAdapter adp = new SqlDataAdapter();
+            adp.SelectCommand = new SqlCommand();
+            adp.SelectCommand.CommandText = query;
+            adp.SelectCommand.Connection = Tools.Connection;
+
             DataTable dt = new DataTable();
             adp.Fill(dt);
 

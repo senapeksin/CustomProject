@@ -13,7 +13,8 @@ namespace CustomProject.MvcUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            List<Categories> kategoriler = CategoriesORM.Current.Select();
+            CategoriesORM orm = new CategoriesORM();
+            List<Categories> kategoriler = orm.Select();
             return View(kategoriler);
         }
     }

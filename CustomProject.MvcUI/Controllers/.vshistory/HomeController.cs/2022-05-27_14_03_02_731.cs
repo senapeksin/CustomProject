@@ -12,7 +12,7 @@ namespace CustomProject.MvcUI.Controllers
     {
         // GET: Home
         public ActionResult Index()
-        {
+        { 
             List<Categories> kategoriler = CategoriesORM.Current.Select();
             return View(kategoriler);
         }

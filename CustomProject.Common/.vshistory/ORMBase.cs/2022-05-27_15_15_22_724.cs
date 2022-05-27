@@ -23,25 +23,12 @@ namespace CustomProject.Common
             } 
         }
   
-        private Type ETType
+        private Type Type
         {
             get 
             { 
                 return typeof(ET); 
             } 
-        }
-
-        private Table TableAtt
-        {
-            get
-            {
-                var attributes = ETType.GetCustomAttributes(typeof(Table), false);
-                if (attributes !=null && attributes.Any())
-                {
-                    Table tbl = (Table)attributes[0];
-                    return tbl;
-                }
-            }
         }
 
         public bool Delete(ET entity)
@@ -51,8 +38,7 @@ namespace CustomProject.Common
 
         public bool Insert(ET entity)
         {
-            string query = "insert into ";
-
+             
         }
 
         public List<ET> Select()
