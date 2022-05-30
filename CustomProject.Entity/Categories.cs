@@ -2,7 +2,7 @@
 
 namespace CustomProject.Entity
 {
-    [Table(PrimaryColumn ="CategoryID", TableName ="Categories")]
+    [Table(PrimaryColumn ="CategoryID", TableName ="Categories", IdentityColumn = "CategoryID")]
     public class Categories
     {
         public int CategoryID { get; set; }

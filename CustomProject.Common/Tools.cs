@@ -26,7 +26,7 @@ namespace CustomProject.Common
             set { _connection = value; }
         }
         public static List<ET> ToList<ET>(this DataTable dt) where ET : class, new()
-        {
+        { 
             Type type = typeof(ET);
 
             List<ET> list = new List<ET>();
@@ -48,5 +48,36 @@ namespace CustomProject.Common
             }
             return list;
         }
+
+        public static Result<bool> Exec(this SqlCommand command)
+        {
+            try
+            {
+                if (command.Connection.State != ConnectionState.Open)
+                    command.Connection.Open();
+
+                int result = command.ExecuteNonQuery();
+                return new Result<bool>
+                {
+                    IsSuccess = true,
+                    Message = "İşlem Başarılı.",
+                    Data = result > 0
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool>
+                {
+                    IsSuccess = false,
+                    Message= "Hata!" +ex.Message 
+                };
+            }
+            finally
+            {
+                command.Connection.Close();
+            }
+        }
+
+
     } 
 }
