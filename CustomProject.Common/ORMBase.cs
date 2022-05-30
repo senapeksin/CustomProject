@@ -97,7 +97,7 @@ namespace CustomProject.Common
             SqlDataAdapter adp = new SqlDataAdapter(query,Tools.Connection); 
             DataTable dt = new DataTable();
             adp.Fill(dt);
-            //düzenlenecek
+          
             return dt.ToList<ET>();
         }
 
