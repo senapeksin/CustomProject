@@ -94,16 +94,31 @@ namespace CustomProject.Common
                 query += tbl.TableName;
             }
 
-            SqlDataAdapter adp = new SqlDataAdapter(query,Tools.Connection); 
-            DataTable dt = new DataTable();
-            adp.Fill(dt);
-          
-            return dt.ToList<ET>();
+            SqlDataAdapter adp = new SqlDataAdapter(query,Tools.Connection);
+            return adp.ToList<ET>();   
         }
 
         public Result<bool> Update(ET entity)
         {
-            throw new System.NotImplementedException();
+            string values = "";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = Tools.Connection;
+            string query = "UPDATE ";
+            query += string.Format(TableAtt.TableName+" ");
+            query += "SET ";
+
+            PropertyInfo[] properties = ETType.GetProperties();
+            foreach (PropertyInfo pi in properties)
+            {
+                if (pi.Name == TableAtt.IdentityColumn)
+                {
+                    continue;
+                }
+                object value = pi.GetValue(entity);
+                if (value == null) continue;
+                query += string.Format("{0}=@{1},",pi.Name);
+            }
+            return null;
         }
     }
 }

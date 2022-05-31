@@ -25,28 +25,48 @@ namespace CustomProject.Common
             }
             set { _connection = value; }
         }
-        public static List<ET> ToList<ET>(this DataTable dt) where ET : class, new()
-        { 
-            Type type = typeof(ET);
-
-            List<ET> list = new List<ET>();
-
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (DataRow dr in dt.Rows)
+        public static Result<List<ET>> ToList<ET>(this SqlDataAdapter adp) where ET : class, new()
+        {
+            try
             {
-                ET tip = new ET();
-                foreach (PropertyInfo pi in properties)
+                DataTable dt = new DataTable();
+                adp.Fill(dt);
+
+                Type type = typeof(ET);
+
+                List<ET> list = new List<ET>();
+
+                PropertyInfo[] properties = type.GetProperties();
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    object value = dr[pi.Name];
-                    if (value !=null)
+                    ET tip = new ET();
+                    foreach (PropertyInfo pi in properties)
                     {
-                        pi.SetValue(tip,value);
+                        object value = dr[pi.Name];
+                        if (value != null)
+                        {
+                            pi.SetValue(tip, value);
+                        }
                     }
+                    list.Add(tip);
                 }
-                list.Add(tip); 
+                return new Result<List<ET>>
+                {
+                    IsSuccess = true,
+                    Message = "İşlem başarılı!",
+                    Data = list
+                };
             }
-            return list;
+            catch (Exception ex)
+            {
+                return new Result<List<ET>>
+                {
+                    IsSuccess = false,
+                    Message = "Hata!"+ex.Message 
+                };
+
+            } 
         }
 
         public static Result<bool> Exec(this SqlCommand command)

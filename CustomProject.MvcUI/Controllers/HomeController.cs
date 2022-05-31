@@ -1,4 +1,5 @@
-﻿using CustomProject.Entity;
+﻿using CustomProject.Common;
+using CustomProject.Entity;
 using CustomProject.ORM;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,9 @@ namespace CustomProject.MvcUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            List<Categories> kategoriler = CategoriesORM.Current.Select();
-            return View(kategoriler);
+            Result<List<Categories>> kategoriler = CategoriesORM.Current.Select();
+
+            return View(kategoriler.Data);
         }
     }
 }
